@@ -382,18 +382,22 @@ Template.lobby.events({
     var game = getCurrentGame();
     var location = getRandomLocation();
     var players = Players.find({gameID: game._id});
-    var localEndTime = moment().add(players.length * 1.5, 'minutes');
-    var gameEndTime = TimeSync.serverTime(localEndTime);
 
     var spyIndex = Math.floor(Math.random() * players.count());
     var firstPlayerIndex = Math.floor(Math.random() * players.count());
+
+    var playerCount = 0;
 
     players.forEach(function(player, index){
       Players.update(player._id, {$set: {
         isSpy: index === spyIndex,
         isFirstPlayer: index === firstPlayerIndex
       }});
+      playerCount++;
     });
+    
+    var localEndTime = moment().add(playerCount * 1.5, 'minutes');
+    var gameEndTime = TimeSync.serverTime(localEndTime);
 
     assignRoles(players, location);
     
