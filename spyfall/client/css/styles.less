@@ -1,13 +1,13 @@
 /* Variables */
 
-@fg: #EEE;
-@highlight: #FFF;
+@fg: #eee;
+@highlight: #fff;
 @dark: #222;
 @darkest: #111;
-@error: #d00000;
+@alert: #ff0f0f;
 @list: #555;
 
-@bg: @dark; 
+/* @bg: @dark; */
 @bg: #132;
 
 .rounded-corners (@radius: 5px) {
@@ -66,7 +66,7 @@ a:hover {
 }
 
 .alert-error {
-    color: @error;
+    color: @alert;
 }
 
 .alert button {
@@ -126,7 +126,7 @@ a:hover {
     border-radius: 3px;
     position: relative;
     top: 2px;
-    background-color:@error;
+    background-color:@alert;
 }
 
 .access-buttons .access-button {
@@ -376,7 +376,7 @@ a:hover {
 
 .first-player-indicator {
     display: inline;
-    color: #ff0f0f;
+    color: @alert;
     font-size: 12px;
     position: relative;
     top: -6px;
