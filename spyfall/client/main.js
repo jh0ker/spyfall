@@ -106,7 +106,7 @@ function generateNewGame(){
     accessCode: generateAccessCode(),
     state: "waitingForPlayers",
     location: null,
-    lengthInMinutes: 0,
+    lengthInMinutes: 8,
     endTime: null,
     paused: false,
     pausedTime: null
@@ -128,8 +128,6 @@ function generateNewPlayer(game, name){
   };
   
   var playerID = Players.insert(player);
-  
-  game.lengthInMinutes = game.lengthInMinutes + 1.5;
   
   return Players.findOne(playerID);
 }
@@ -208,11 +206,6 @@ function leaveGame () {
   GAnalytics.event("game-actions", "gameleave");
   var player = getCurrentPlayer();
   
-  var game = getCurrentGame();
-  
-  
-
-  game.lengthInMinutes = game.lengthInMinutes - 1.5;
   Session.set("currentView", "startMenu");
   Players.remove(player._id);
 
@@ -389,7 +382,7 @@ Template.lobby.events({
     var game = getCurrentGame();
     var location = getRandomLocation();
     var players = Players.find({gameID: game._id});
-    var localEndTime = moment().add(game.lengthInMinutes, 'minutes');
+    var localEndTime = moment().add(players.length * 1.5, 'minutes');
     var gameEndTime = TimeSync.serverTime(localEndTime);
 
     var spyIndex = Math.floor(Math.random() * players.count());
