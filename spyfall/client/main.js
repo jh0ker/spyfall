@@ -129,7 +129,7 @@ function generateNewPlayer(game, name){
   
   var playerID = Players.insert(player);
   
-  game.lengthInMinutes += 1.5;
+  game.lengthInMinutes = game.lengthInMinutes + 1.5;
   
   return Players.findOne(playerID);
 }
@@ -212,7 +212,7 @@ function leaveGame () {
   
   
 
-  game.lengthInMinutes -= 1.5;
+  game.lengthInMinutes = game.lengthInMinutes - 1.5;
   Session.set("currentView", "startMenu");
   Players.remove(player._id);
 
