@@ -106,7 +106,7 @@ function generateNewGame(){
     accessCode: generateAccessCode(),
     state: "waitingForPlayers",
     location: null,
-    lengthInMinutes: 8,
+    lengthInMinutes: 0,
     endTime: null,
     paused: false,
     pausedTime: null
@@ -126,9 +126,11 @@ function generateNewPlayer(game, name){
     isSpy: false,
     isFirstPlayer: false
   };
-
+  
   var playerID = Players.insert(player);
-
+  
+  game.lengthInMinutes += 1.5;
+  
   return Players.findOne(playerID);
 }
 
@@ -205,7 +207,12 @@ function trackGameState () {
 function leaveGame () {  
   GAnalytics.event("game-actions", "gameleave");
   var player = getCurrentPlayer();
+  
+  var game = getCurrentGame();
+  
+  
 
+  game.lengthInMinutes -= 1.5;
   Session.set("currentView", "startMenu");
   Players.remove(player._id);
 
