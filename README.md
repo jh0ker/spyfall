@@ -2,7 +2,11 @@
 
 Spyfall on your mobile device!
 
-This is the code that currently runs [http://spyfall.meteor.com](http://spyfall.meteor.com). It's a simple site I've built as a learning project, so definitely don't use it as an example of Meteor best practices. Pull requests welcome!
+This is a _fork_ of the code that currently runs [http://spyfall.meteor.com](http://spyfall.meteor.com). 
+
+I changed the time limit from a fixed 8 minutes to 1min 30sec per Player. Also, I modified `styles.less` to allow easy color changing (and changed the color palette to a dark-green theme).
+
+Pull requests welcome!
 
 ## Disclaimer
 
