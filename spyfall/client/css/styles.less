@@ -1,5 +1,25 @@
+/* Variables */
+
+@fg: #EEE;
+@highlight: #FFF;
+@dark: #222;
+@darkest: #111;
+@error: #d00000;
+@list: #555;
+
+@bg: @dark; 
+@bg: #132;
+
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
 body {
     text-align: center;
+    background-color: @bg;
+    color: @fg;
 }
 
 h4 {
@@ -25,14 +45,18 @@ h5 {
 }
 
 .footer {
-    color: #aaa;
+    color: @fg;
     font-size: 10px;
     text-align: center;
     margin-bottom: 30px;
 }
 
 a {
-    color: #999;
+    color: @fg;
+}
+
+a:hover {
+    color: @highlight;
 }
 
 .alert {
@@ -42,7 +66,7 @@ a {
 }
 
 .alert-error {
-    color: #d00000;
+    color: @error;
 }
 
 .alert button {
@@ -77,13 +101,14 @@ a {
     text-align: center;
     margin-top: -15px;
     
-    color: #666;
+    color: @fg;
 }
 
 .access-code span {
     font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
     font-size: 1.2em;
-    color: black;
+    color: @highlight;
+    font-weight: bold;
 }
 
 .access-buttons {
@@ -101,14 +126,14 @@ a {
     border-radius: 3px;
     position: relative;
     top: 2px;
-    background-color: #ccc;
+    background-color:@error;
 }
 
 .access-buttons .access-button {
     text-decoration: none;
     position: relative;
     top: 2px;
-    color: #555;
+    color: @fg;
     padding: 5px;
 }
 
@@ -126,6 +151,11 @@ a {
     text-align: center;
 }
 
+.qrcode svg {
+    background-color: @fg;
+    padding: 10px;
+}
+
 .access-link {
     font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
     text-align: center;
@@ -135,7 +165,7 @@ a {
 }
 
 .access-link a {
-    color: black;
+    color: @highlight;
 }
 
 .lobby-player-list {
@@ -149,11 +179,13 @@ a {
 .lobby-player-list > li {
     text-align: left;
     position:relative; /* Create a positioning context */
-    margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+    margin:0 0 6px 2.25em; /* Give each list item a left margin to make room for the numbers */
     padding:4px 8px; /* Add some spacing around the content */
     list-style:none; /* Disable the normal item numbering */
     background:transparent;
-    background-color: #f9f9f9;
+    background-color: @list;
+    
+    .rounded-corners;
 }
 
 .lobby-player-list > li:before {
@@ -162,7 +194,7 @@ a {
     /* Position and style the number */
     position:absolute;
     top:0;
-    left:-2em;
+    left:-2.25em;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
     box-sizing:border-box;
@@ -173,7 +205,9 @@ a {
     font-weight:bold;
     font-family:"Helvetica Neue", Arial, sans-serif;
     text-align:center;
-    background-color: #f9f9f9;
+    background-color: @list;
+    
+    .rounded-corners;
 }
 
 .btn-remove-player {
@@ -187,11 +221,11 @@ a {
 }
 
 .game-countdown {
-    color: #333;
+    color: @fg;
     text-decoration: none;
 
     &:active, &:focus, &:hover {
-        color: #333;
+        color: @highlight;
     }
 
     &.paused {
@@ -241,8 +275,8 @@ a {
 }
 
 .status-container {
-    border-top: 1px solid #E1E1E1;
-    border-bottom: 1px solid #E1E1E1;
+    border-top: 1px solid @fg;
+    border-bottom: 1px solid @fg;
     position: relative;
     min-height: 14px;
     margin-bottom: 3rem;
@@ -263,7 +297,7 @@ a {
     border: none;
     font-size: 10px;
     text-transform: none;
-    color: #999;
+    color: @dark;
 }
 
 .current-location {
@@ -307,8 +341,10 @@ a {
     -webkit-box-sizing:border-box;
     box-sizing:border-box;
     list-style-type: none;
-    background-color: #f9f9f9;
+    background-color: @list;
     margin: 0 0 4px 0;
+    
+    .rounded-corners;
 }
 
 .location-list li .location-name {
@@ -317,6 +353,9 @@ a {
 
 .ingame-player-list {
     overflow: hidden;
+    background-color: @list;
+    
+    .rounded-corners;
 }
 
 .ingame-player-list li {
@@ -332,13 +371,12 @@ a {
 }
 
 .ingame-player-list li .player-name {
-    background-color: #f9f9f9;
     padding: 3px 10px;
 }
 
 .first-player-indicator {
     display: inline;
-    color: #ff0000;
+    color: #ff0f0f;
     font-size: 12px;
     position: relative;
     top: -6px;
@@ -363,6 +401,7 @@ input[type="text"] {
     width: 100%;
     max-width: 280px;
     height: 48px;
+    color: @dark;
   }
 
 @media (max-width: 340px) {
@@ -382,4 +421,54 @@ input[type="text"] {
     box-sizing: border-box;
     height: 48px;
   }
+}
+
+/* Buttons 
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  background-color: @fg;
+  color: @dark;
+  border: 1px solid @dark; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  border-color: @dark;
+  color: @darkest;
+  background-color: @highlight;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  border-color: @dark;
+  color: @dark;
+  background-color: @fg; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  border-color: @dark;
+  color: @darkest;
+  background-color: @highlight; }
+
+.language-select {
+  color: @dark;
 }
