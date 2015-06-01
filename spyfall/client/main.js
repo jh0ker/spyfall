@@ -227,7 +227,7 @@ FlashMessages.configure({
 
 Template.main.helpers({
   whichView: function() {
-    return Session.get('currentView')
+    return Session.get('currentView');
   },
   language: function() {
     return getUserLanguage();
@@ -282,14 +282,29 @@ Template.createGame.events({
     var game = generateNewGame();
     var player = generateNewPlayer(game, playerName);
 
-    Session.set("gameID", game._id);
-    Session.set("playerID", player._id);
-    Session.set("currentView", "lobby");
+    Meteor.subscribe('games', game.accessCode);
+
+    Session.set("loading", true);
+    
+    Meteor.subscribe('players', game._id, function onReady(){
+      Session.set("loading", false);
+
+      Session.set("gameID", game._id);
+      Session.set("playerID", player._id);
+      Session.set("currentView", "lobby");
+    });
+
     return false;
   },
   'click .btn-back': function () {
     Session.set("currentView", "startMenu");
     return false;
+  }
+});
+
+Template.createGame.helpers({
+  isLoading: function() {
+    return Session.get('loading');
   }
 });
 
@@ -306,21 +321,28 @@ Template.joinGame.events({
 
     accessCode = accessCode.trim();
     accessCode = accessCode.toLowerCase();
-    
-    var game = Games.findOne({
-      accessCode: accessCode
+
+    Session.set("loading", true);
+
+    Meteor.subscribe('games', accessCode, function onReady(){
+      Session.set("loading", false);
+
+      var game = Games.findOne({
+        accessCode: accessCode
+      });
+
+      if (game) {
+        Meteor.subscribe('players', game._id);
+        player = generateNewPlayer(game, playerName);
+
+        Session.set("gameID", game._id);
+        Session.set("playerID", player._id);
+        Session.set("currentView", "lobby");
+      } else {
+        FlashMessages.sendError(TAPi18n.__("ui.invalid access code"));
+        GAnalytics.event("game-actions", "invalidcode");
+      }
     });
-
-    if (game) {
-      player = generateNewPlayer(game, playerName);
-
-      Session.set("gameID", game._id);
-      Session.set("playerID", player._id);
-      Session.set("currentView", "lobby");
-    } else {
-      FlashMessages.sendError(TAPi18n.__("ui.invalid access code"));
-      GAnalytics.event("game-actions", "invalidcode");
-    }
 
     return false;
   },
@@ -329,6 +351,13 @@ Template.joinGame.events({
     return false;
   }
 });
+
+Template.joinGame.helpers({
+  isLoading: function() {
+    return Session.get('loading');
+  }
+});
+
 
 Template.joinGame.rendered = function (event) {
   resetUserState();
@@ -363,7 +392,7 @@ Template.lobby.helpers({
       return null;
     }
 
-    var players = Players.find({'gameID': game._id}).fetch();
+    var players = Players.find({'gameID': game._id}, {'sort': {'createdAt': 1}}).fetch();
 
     players.forEach(function(player){
       if (player._id === currentPlayer._id){
