@@ -2,7 +2,7 @@
 
 Spyfall on your mobile device!
 
-This is a _fork_ of the code that currently runs [http://spyfall.meteor.com](http://spyfall.meteor.com). 
+This is a _fork_ of the code that currently runs [http://spyfall.meteor.com](http://spyfall.meteor.com). You can play this fork at [http://spyfall.jhoeke.de](http://spyfall.jhoeke.de).
 
 I changed the time limit from a fixed 8 minutes to 1min 30sec per Player. Also, I modified `styles.less` to allow easy color changing (and changed the color palette to a dark-green theme).
 
