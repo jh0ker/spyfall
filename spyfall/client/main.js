@@ -31,7 +31,7 @@ function setUserLanguage(language) {
 
 function getLanguageDirection() {
   var language = getUserLanguage()
-  var rtlLanguages = ['he'];
+  var rtlLanguages = ['he', 'ar'];
 
   if ($.inArray(language, rtlLanguages) !== -1) {
     return 'rtl';
@@ -352,6 +352,10 @@ Template.joinGame.events({
 
     var accessCode = event.target.accessCode.value;
     var playerName = event.target.playerName.value;
+
+    if (!playerName) {
+      return false;
+    }
 
     accessCode = accessCode.trim();
     accessCode = accessCode.toLowerCase();
